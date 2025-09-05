@@ -4,6 +4,9 @@ import axios from "axios";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 
+const API_URL = import.meta.env.VITE_API_URL;
+ // ✅ uses environment variable
+
 function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -13,11 +16,11 @@ function ResetPassword() {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/auth/reset-password/${token}`,
+        `${API_URL}/api/auth/reset-password/${token}`,
         { password }
       );
       alert(res.data.message || "Password reset successful!");
-      navigate("/"); // 👈 redirects user to Login page after reset
+      navigate("/"); // redirects user to Login page after reset
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Error resetting password");

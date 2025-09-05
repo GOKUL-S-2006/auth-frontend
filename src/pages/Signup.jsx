@@ -4,23 +4,23 @@ import axios from "axios";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 function Signup() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", {
-        name,
-        email,
-        password,
-      });
+      await axios.post(`${API_URL}/api/auth/signup`, { name, email, password });
       alert("Signup successful!");
-      navigate("/"); // 👈 redirect to login after signup
-    } catch {
+      navigate("/"); // redirect to login
+    } catch (err) {
+      console.error(err.response?.data || err.message);
       alert("Error creating account");
     }
   };
